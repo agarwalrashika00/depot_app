@@ -8,9 +8,29 @@
 
     <%= stylesheet_link_tag "application", media: 'all', "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%
+=begin%>
+ <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> 
+<%
+=end%>
+
   </head>
 
   <body>
+    <header class="main">
+      <%= image_tag 'logo.jpg', alt: 'The Pragmatic Bookshelf' %>
+      <h1><%= @page_title %></h1>
+    </header>
+    <section class="content">
+      <nav class="side_nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/questions">Questions</a></li>
+          <li><a href="/news">News</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li class="time"><%= Time.now %></li>
+        </ul>
+      </nav>
     <main class='<%= controller.controller_name %>'>
       <%= yield %>
     </main>
