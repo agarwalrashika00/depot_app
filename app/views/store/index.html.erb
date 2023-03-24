@@ -19,7 +19,7 @@
           </p>
           <div class="price">
             <%= number_to_currency(product.price, unit: "$") %>
-            <%= button_to 'Add to Cart', line_items_path(product_id: product.id) %>
+            <%= button_to 'Add to Cart', line_items_path(product_id: product.id), remote: true %>
           </div>
         </li>
       <% end %>
