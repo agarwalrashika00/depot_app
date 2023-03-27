@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_25_061016) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_191936) do
   create_table "action_mailbox_inbound_emails", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "status", default: 0, null: false
     t.string "message_id", null: false
@@ -92,6 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_25_061016) do
     t.decimal "price", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "enabled"
+    t.decimal "discount_price", precision: 10
+    t.string "permalink"
   end
 
   create_table "support_requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
