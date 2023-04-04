@@ -1,0 +1,12 @@
+<% counter = 0 %>
+<% @user.line_items.each do |line_item| %>
+  <h3>Line Item#<%= counter = counter + 1 %></h3>
+  <br>
+  product: <%= line_item.product.title %>
+  <br>
+  quantity: <%= line_item.quantity %>
+  <br>
+  order_id: <%= line_item.order_id %>
+  <br>
+  <br>
+<% end %>

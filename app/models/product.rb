@@ -3,7 +3,8 @@ class Product < ApplicationRecord
   attr_accessor :information
   has_many :line_items
   has_many :orders, through: :line_items
-  before_destroy :ensure_not_referenced_by_any_line_item
+  has_many :carts, through: :line_items
+  # before_destroy :ensure_not_referenced_by_any_line_item
 
   validates :title, :description, :image_url, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }, allow_blank: true
@@ -29,15 +30,9 @@ class Product < ApplicationRecord
 
   after_initialize :set_discount_price, unless: :discount_price?
 
-<<<<<<< HEAD
   before_validation :set_title, unless: :title?
 
   after_initialize :set_discount_price, unless: :discount_price?
-=======
-  before_validation :title_present?
-
-  after_initialize :discount_price_present?
->>>>>>> d2e89f1 (callback after review 1)
 
   before_create do
     self.title = 'abc' if title.blank?
@@ -49,27 +44,18 @@ class Product < ApplicationRecord
   end
 
   private
-  def ensure_not_referenced_by_any_line_item
-    unless line_items.empty?
-      errors.add(:base, 'Line Items present')
-      throw :abort
-    end
-  end
+  # def ensure_not_referenced_by_any_line_item
+  #   unless line_items.empty?
+  #     errors.add(:base, 'Line Items present')
+  #     throw :abort
+  #   end
+  # end
 
-<<<<<<< HEAD
   def set_title
     self.title = 'abc'
   end
 
   def set_discount_price
     self.discount_price = price 
-=======
-  def title_present?
-    self.title = 'abc' unless title?
-  end
-
-  def discount_price_present?
-    self.discount_price = price unless discount_price?
->>>>>>> d2e89f1 (callback after review 1)
   end
 end

@@ -1,0 +1,22 @@
+<% counter = 0 %>
+<% @user.orders.each do |order| %>
+  <h2>ORDER#<%= counter = counter+1 %></h2>
+  customer: <%= order.name %>
+  <br>
+  email: <%= order.email %>
+  <br>
+  <h3>line items:</h3>
+  <br>
+  <% total_price = 0 %>
+  <% order.line_items.each do |line_item| %>
+    <%= Product.find(line_item.product_id).title %>
+    &nbsp;&nbsp;
+    <%= line_item.price %>
+    <% total_price += line_item.price %>
+    <br>
+  <% end %>
+  <br>
+  Total Price: <%= total_price %>
+  <br>
+  <br>
+<% end %>

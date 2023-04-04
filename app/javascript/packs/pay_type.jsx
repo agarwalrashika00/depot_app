@@ -6,4 +6,3 @@ import PayTypeSelector from 'PayTypeSelector'
   var element = document.getElementById("pay-type-component");
   ReactDOM.render(<PayTypeSelector />, element);
 // });
-// 

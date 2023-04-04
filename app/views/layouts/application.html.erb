@@ -22,7 +22,11 @@
     <section class="content">
       <nav class="side_nav">
         <div id="cart" class="carts">
+<<<<<<< HEAD
           <%= render_if @cart && @cart.line_items.any?, @cart %>
+=======
+          <%= render_if(@cart && @cart.line_items.any?, @cart) %>
+>>>>>>> 2c43cb5 (associations extension)
         </div>
         <ul>
           <li><a href="/"><%= t('.home') %></a></li>
