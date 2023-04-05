@@ -29,9 +29,15 @@ class Product < ApplicationRecord
 
   after_initialize :set_discount_price, unless: :discount_price?
 
+<<<<<<< HEAD
   before_validation :set_title, unless: :title?
 
   after_initialize :set_discount_price, unless: :discount_price?
+=======
+  before_validation :title_present?
+
+  after_initialize :discount_price_present?
+>>>>>>> d2e89f1 (callback after review 1)
 
   private
   def ensure_not_referenced_by_any_line_item
@@ -41,11 +47,20 @@ class Product < ApplicationRecord
     end
   end
 
+<<<<<<< HEAD
   def set_title
     self.title = 'abc'
   end
 
   def set_discount_price
     self.discount_price = price 
+=======
+  def title_present?
+    self.title = 'abc' unless title?
+  end
+
+  def discount_price_present?
+    self.discount_price = price unless discount_price?
+>>>>>>> d2e89f1 (callback after review 1)
   end
 end
