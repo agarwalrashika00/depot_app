@@ -1,43 +1,45 @@
 <%= form_with(model: product) do |form| %>
   <% if product.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+    <div id="error_explanation">
+      <h2><%=raw t('errors.template.header', count: @product.errors.count, 
+        model: t('activerecord.models.product')) %>.</h2>
+      <p><%= t('errors.template.body') %></p>
       <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%=raw message %></li>
         <% end %>
       </ul>
-    </div>
-  <% end %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description, rows: 10, cols: 60 %>
-  </div>
-  <div>
-    <%= form.label :image_url, style: "display: block" %>
-    <%= form.text_field :image_url %>
-  </div>
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-  <div>
-    <%= form.label :enabled , style: "display: inline" %>
-    <%= form.check_box :enabled %>
-  </div>
-  <div>
-    <%= form.label :discount_price, style: "display: block" %>
-    <%= form.text_field :discount_price %>
-  </div>
-  <div>
-    <%= form.label :permalink, style: "display: block" %>
-    <%= form.text_field :permalink %>
-  </div>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+      <div>
+      <% end %>
+      <div class="field">
+        <%= form.label :title, style: "display: block" %>
+        <%= form.text_field :title %>
+      </div>
+      <div>
+        <%= form.label :description, style: "display: block" %>
+        <%= form.text_area :description, rows: 10, cols: 60 %>
+      </div>
+      <div>
+        <%= form.label :image_url, style: "display: block" %>
+        <%= form.text_field :image_url %>
+      </div>
+      <div>
+        <%= form.label :price, style: "display: block" %>
+        <%= form.text_field :price %>
+      </div>
+      <div>
+        <%= form.label :enabled , style: "display: inline" %>
+        <%= form.check_box :enabled %>
+      </div>
+      <div>
+        <%= form.label :discount_price, style: "display: block" %>
+        <%= form.text_field :discount_price %>
+      </div>
+      <div>
+        <%= form.label :permalink, style: "display: block" %>
+        <%= form.text_field :permalink %>
+      </div>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>

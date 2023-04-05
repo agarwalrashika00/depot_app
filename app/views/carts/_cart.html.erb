@@ -2,13 +2,13 @@
   <article>
     <%
 =begin%>
- <% if notice %>
+    <% if notice %>
       <aside id="notice"><%= notice %></aside>
-    <% end %> 
-<%
+    <% end %>
+    <%
 =end%>
     <% unless cart.line_items.empty? %>
-      <h2>Your Cart</h2>
+      <h2><%= t('.title') %></h2>
       <table>
         <%= render(cart.line_items) %>
         <tfoot>
@@ -20,12 +20,12 @@
       </table>
     <% end %>
     <div class="actions">
-      <%= button_to 'Empty cart', cart, method: :delete, data: { 
+      <%= button_to t('.empty'), cart, method: :delete, data: { 
         turbo_confirm: 'Are you sure?'} 
       %>
       <br>
       <% unless controller.controller_name == "orders" %>
-        <%= button_to 'Checkout', new_order_path, method: :get, class: "checkout" %>
+        <%= button_to t('.checkout'), new_order_path(locale: I18n.locale), method: :get, class: "checkout" %>
       <% end %>
     </div>
   </article>
