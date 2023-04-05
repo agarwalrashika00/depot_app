@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   validates :permalink, uniqueness: true, format: {
     with: PERMALINK_REGEXP
   }
-  validates :description, word_count: { in: 5..10 }
+  validates :description, word_count: { in: 5..10 }, allow_nil: true
   validates_length_of :essay,
     minimum: 5, 
     maximum: 10, 
@@ -25,18 +25,9 @@ class Product < ApplicationRecord
     with: /(\w+ \w+){4,}/
   }, allow_blank: true
 
-  before_validation :title_present?
+  before_validation :set_title, unless: :title?
 
-  after_initialize :discount_price_present?
-
-  before_create do
-    self.title = 'abc' if title.blank?
-  end
-
-  
-  after_initialize do
-    self.discount_price = price if discount_price.nil?
-  end
+  after_initialize :set_discount_price, unless: :discount_price?
 
   private
   def ensure_not_referenced_by_any_line_item
@@ -46,11 +37,11 @@ class Product < ApplicationRecord
     end
   end
 
-  def title_present?
-    self.title = 'abc' unless title?
+  def set_title
+    self.title = 'abc'
   end
 
-  def discount_price_present?
-    self.discount_price = price unless discount_price?
+  def set_discount_price
+    self.discount_price = price 
   end
 end
