@@ -29,9 +29,9 @@ class Product < ApplicationRecord
 
   after_initialize :set_discount_price, unless: :discount_price?
 
-  before_validation :title_present?
+  before_validation :set_title, unless: :title?
 
-  after_initialize :discount_price_present?
+  after_initialize :set_discount_price, unless: :discount_price?
 
   private
   def ensure_not_referenced_by_any_line_item
