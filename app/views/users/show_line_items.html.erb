@@ -1,6 +1,5 @@
-<% counter = 0 %>
-<% @user.line_items.each do |line_item| %>
-  <h3>Line Item#<%= counter = counter + 1 %></h3>
+<% @user.line_items.each_with_index do |line_item, index| %>
+  <h3>Line Item#<%= index + 1 %></h3>
   <br>
   product: <%= line_item.product.title %>
   <br>

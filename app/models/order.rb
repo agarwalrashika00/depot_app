@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :user
-  has_many :line_items, dependent: :destroy
+  has_many :line_items, -> { includes :product }, dependent: :destroy
   enum pay_type: {
     "Check" => 0,
     "Credit card" => 1,
@@ -47,5 +47,13 @@ class Order < ApplicationRecord
     else
       raise payment_result.error
     end
+  end
+
+  def total_price
+    total_price = 0
+    line_items.each do |line_item|
+      total_price += line_item.price
+    end
+    total_price
   end
 end

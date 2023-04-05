@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   # get 'store/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-<<<<<<< HEAD
   resources :line_items
   scope '(:locale)' do
     resources :orders
@@ -29,7 +28,5 @@ Rails.application.routes.draw do
     end
     root "store#index", as: 'store_index', via: :all
   end
-=======
   get "/products", to: "products#index"
->>>>>>> 2c43cb5 (associations extension)
 end
