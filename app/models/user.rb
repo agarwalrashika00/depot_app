@@ -8,13 +8,9 @@ class User < ApplicationRecord
 
   after_create_commit :send_welcome_mail
 
-  before_destroy do
-    throw :abort if email == 'admin@depot.com'
-  end
+  before_destroy :donot_destroy_admin
 
-  before_update do
-    throw :abort if email == 'admin@depot.com'
-  end
+  before_update :donot_update_admin
 
   private
   def ensure_an_admin_remains
@@ -25,5 +21,23 @@ class User < ApplicationRecord
 
   def send_welcome_mail
     WelcomeUserMailer.with(user: self).welcome_user_email.deliver_now
+  end
+
+  def admin?
+    User.find(self.id).email == 'admin@depot.com'
+  end
+
+  def donot_destroy_admin(user)
+    if admin?
+      user.errors.add :base, :cannot_destroy_admin, message: "cannot destroy admin"
+      throw :abort
+    end
+  end
+
+  def donot_update_admin(user)
+    if admin?
+      user.errors.add :base, :cannot_update_admin, message: "cannot update admin"
+      throw :abort
+    end
   end
 end

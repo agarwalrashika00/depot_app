@@ -25,14 +25,9 @@ class Product < ApplicationRecord
     with: /(\w+ \w+){4,}/
   }, allow_blank: true
 
-  before_create do
-    self.title = 'abc' if title.blank?
-  end
+  before_validation :title_present?
 
-  
-  after_initialize do
-    self.discount_price = price if discount_price.nil?
-  end
+  after_initialize :discount_price_present?
 
   private
   def ensure_not_referenced_by_any_line_item
@@ -40,5 +35,13 @@ class Product < ApplicationRecord
       errors.add(:base, 'Line Items present')
       throw :abort
     end
+  end
+
+  def title_present?
+    self.title = 'abc' unless title?
+  end
+
+  def discount_price_present?
+    self.discount_price = price unless discount_price?
   end
 end
