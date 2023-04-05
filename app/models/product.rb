@@ -39,6 +39,15 @@ class Product < ApplicationRecord
   after_initialize :discount_price_present?
 >>>>>>> d2e89f1 (callback after review 1)
 
+  before_create do
+    self.title = 'abc' if title.blank?
+  end
+
+  
+  after_initialize do
+    self.discount_price = price if discount_price.nil?
+  end
+
   private
   def ensure_not_referenced_by_any_line_item
     unless line_items.empty?

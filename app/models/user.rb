@@ -12,6 +12,16 @@ class User < ApplicationRecord
 
   before_update :donot_update_admin, if: :admin?
 
+  after_create_commit :send_welcome_mail
+
+  before_destroy do
+    throw :abort if email == 'admin@depot.com'
+  end
+
+  before_update do
+    throw :abort if email == 'admin@depot.com'
+  end
+
   private
   def ensure_an_admin_remains
     if User.count.zero?
