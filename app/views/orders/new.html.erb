@@ -1,14 +1,13 @@
-<section class="depot_form">  
-  <h1>Please Enter Your Details</h1>
+<section class="depot_form">
+  <h1><%= t('.legend') %></h1>
   <%= render "form", order: @order %>
 </section>
 <%= javascript_pack_tag("pay_type") %>
 <br>
-
 <%
 =begin%>
- <div>
+<div>
   <%= link_to "Back to orders", orders_path %>
-</div> 
+</div>
 <%
 =end%>
