@@ -3,9 +3,7 @@ class LineItem < ApplicationRecord
   belongs_to :product
   belongs_to :cart, optional: true
 
-  before_create do
-    LineItem.validates :cart_id, uniqueness: { scope: :product_id }
-  end
+  validates :cart_id, uniqueness: { scope: :product_id }
 
   def total_price
     product.price * quantity
