@@ -1,0 +1,8 @@
+<% @categories.each do |super_category| %>
+  <h2><%= super_category.name %></h2>
+  <ul>
+    <% super_category.sub_categories.each do |sub| %>
+      <li><%= sub.name %></li>
+    <% end %>
+  </ul>
+<% end %>

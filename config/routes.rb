@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
 
+  resources :categories
+
   # get 'admin/index'
   # get 'sessions/new'
   get 'sessions/create'
