@@ -22,6 +22,10 @@ class Product < ApplicationRecord
     with: /(\w+ \w+){4,}/
   }, allow_blank: true
 
+  before_validation :set_title, unless: :title?
+
+  before_validation :set_discount_price, unless: :discount_price?
+
   private
   def ensure_not_referenced_by_any_line_item
     unless line_items.empty?
@@ -30,7 +34,15 @@ class Product < ApplicationRecord
     end
   end
 
+  def set_title
+    self.title = 'abc'
+  end
+
+  def set_discount_price
+    self.discount_price = price 
+  end
+
   def essay1
-    essay.split(/ /)
+    essay.split
   end
 end
