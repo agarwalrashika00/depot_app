@@ -2,7 +2,7 @@ class User < ApplicationRecord
   after_destroy :ensure_an_admin_remains
   validates :name, presence: true, uniqueness: true
   has_secure_password
-  has_many :orders, -> { includes :line_items }
+  has_many :orders
   has_many :line_items, through: :orders
   validates :email, uniqueness: true, allow_blank: true, format: {
     with: EMAIL_REGEXP
@@ -13,12 +13,6 @@ class User < ApplicationRecord
   before_destroy :donot_destroy_admin, if: :admin?
 
   before_update :donot_update_admin, if: :admin?
-
-  after_create_commit :send_welcome_mail
-
-  before_destroy :donot_destroy_admin
-
-  before_update :donot_update_admin
 
   private
   def ensure_an_admin_remains

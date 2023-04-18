@@ -65,11 +65,11 @@ class UsersController < ApplicationController
   end
 
   def show_orders
-    @user = User.find(session[:user_id])
+    @user = User.includes(orders: { line_items: :product }).find(session[:user_id])
   end
 
   def show_line_items
-    @user = User.find(session[:user_id])
+    @user = User.includes(line_items: :product).find(session[:user_id])
   end
 
   private
