@@ -26,7 +26,9 @@ class Product < ApplicationRecord
   before_validation :set_title, unless: :title?
 
   before_validation :set_discount_price, unless: :discount_price?
-  
+
+  scope :enabled, -> { where(enabled: true) }
+
   private
   # def ensure_not_referenced_by_any_line_item
   #   unless line_items.empty?
