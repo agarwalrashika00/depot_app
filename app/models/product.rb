@@ -1,6 +1,5 @@
 class Product < ApplicationRecord
-  attr_accessor :essay
-  attr_accessor :information
+  attr_accessor :essay, :information
   has_many :line_items
   has_many :orders, through: :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
@@ -15,19 +14,17 @@ class Product < ApplicationRecord
     with: PERMALINK_REGEXP
   }
   validates :description, word_count: { in: 5..10 }, allow_nil: true
-  validates_length_of :essay,
-    minimum: 5, 
-    maximum: 10, 
-    tokenizer: Proc.new { |str| str.scan(/\w+/) },
-    too_short: "must have at least %{count} words",
-    too_long: "must have at most %{count} words"
+  validates_length_of :essay1,
+    minimum: 5,
+    maximum: 10,
+    message: 'not in range'
   validates :information, format: {
     with: /(\w+ \w+){4,}/
   }, allow_blank: true
 
   before_validation :set_title, unless: :title?
 
-  after_initialize :set_discount_price, unless: :discount_price?
+  before_validation :set_discount_price, unless: :discount_price?
 
   private
   def ensure_not_referenced_by_any_line_item
@@ -43,5 +40,9 @@ class Product < ApplicationRecord
 
   def set_discount_price
     self.discount_price = price 
+  end
+
+  def essay1
+    essay.split
   end
 end
