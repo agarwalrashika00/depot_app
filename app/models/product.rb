@@ -1,8 +1,9 @@
 class Product < ApplicationRecord
   attr_accessor :essay, :information
-  has_many :line_items
+  has_many :line_items, dependent: :restrict_with_error
   has_many :orders, through: :line_items
-  before_destroy :ensure_not_referenced_by_any_line_item
+  has_many :carts, through: :line_items
+  # before_destroy :ensure_not_referenced_by_any_line_item
 
   validates :title, :description, :image_url, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }, allow_blank: true
@@ -25,14 +26,14 @@ class Product < ApplicationRecord
   before_validation :set_title, unless: :title?
 
   before_validation :set_discount_price, unless: :discount_price?
-
+  
   private
-  def ensure_not_referenced_by_any_line_item
-    unless line_items.empty?
-      errors.add(:base, 'Line Items present')
-      throw :abort
-    end
-  end
+  # def ensure_not_referenced_by_any_line_item
+  #   unless line_items.empty?
+  #     errors.add(:base, 'Line Items present')
+  #     throw :abort
+  #   end
+  # end
 
   def set_title
     self.title = 'abc'

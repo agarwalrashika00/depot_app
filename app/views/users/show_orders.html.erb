@@ -1,0 +1,19 @@
+<% @user.orders.each_with_index do |order, index| %>
+  <h2>ORDER#<%= index + 1 %></h2>
+  customer: <%= order.name %>
+  <br>
+  email: <%= order.email %>
+  <br>
+  <h3>line items:</h3>
+  <br>
+  <% order.line_items.each do |line_item| %>
+    <%= line_item.product.title %>
+    &nbsp;&nbsp;
+    <%= line_item.price %>
+    <br>
+  <% end %>
+  <br>
+  Total Price: <%= order.total_price %>
+  <br>
+  <br>
+<% end %>

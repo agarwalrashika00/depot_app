@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   # get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
+  get "/users/orders", to: "users#show_orders"
+  get "/users/line_items", to: "users#show_line_items"
   resources :users
 
   # Defines the root path route ("/")
@@ -26,4 +28,5 @@ Rails.application.routes.draw do
     end
     root "store#index", as: 'store_index', via: :all
   end
+  get "/products", to: "products#index"
 end

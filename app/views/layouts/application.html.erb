@@ -22,7 +22,7 @@
     <section class="content">
       <nav class="side_nav">
         <div id="cart" class="carts">
-          <%= render_if @cart && @cart.line_items.any?, @cart %>
+          <%= render_if(@cart && @cart.line_items.any?, @cart) %>
         </div>
         <ul>
           <li><a href="/"><%= t('.home') %></a></li>

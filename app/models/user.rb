@@ -2,6 +2,8 @@ class User < ApplicationRecord
   after_destroy :ensure_an_admin_remains
   validates :name, presence: true, uniqueness: true
   has_secure_password
+  has_many :orders
+  has_many :line_items, through: :orders
   validates :email, uniqueness: true, allow_blank: true, format: {
     with: EMAIL_REGEXP
   }
