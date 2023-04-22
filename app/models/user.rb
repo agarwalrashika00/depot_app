@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_secure_password
   has_many :orders
   has_many :line_items, through: :orders
+  has_one :address
+  accepts_nested_attributes_for :address
+
   validates :email, uniqueness: true, allow_blank: true, format: {
     with: EMAIL_REGEXP
   }

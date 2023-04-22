@@ -4,6 +4,11 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all.order(:title)
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json:  @products.joins(:category).select(:title, 'name as category_name') }
+    end
+    # render :json => @projects, :callback => 'updateRecordDisplay'
   end
 
   # GET /products/1 or /products/1.json
@@ -13,18 +18,21 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @product.images.build
   end
 
   # GET /products/1/edit
   def edit
+    @product.images.build
   end
 
   # POST /products or /products.json
   def create
     @product = Product.new(product_params)
+    @product.image_params = product_images_params[:image]
 
     respond_to do |format|
-      if @product.save
+      if @product.save 
         format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
@@ -36,6 +44,8 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1 or /products/1.json
   def update
+    @product.image_params = product_images_params[:image]
+
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
@@ -79,6 +89,10 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:title, :description, :image_url, :price)
+      params.require(:product).permit(:title, :description, :image_url, :price, :enabled, :discount_price, :permalink, :category_id)
+    end
+
+    def product_images_params
+      params[:product][:images_attributes]['0'].permit!
     end
 end

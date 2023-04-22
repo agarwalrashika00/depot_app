@@ -10,8 +10,8 @@
     <% @products.each do |product| %>
       <% cache product do %>
         <li>
-          <% if product.image_url %>
-            <%= image_tag(product.image_url) %>
+          <% if product.images.present? %>
+            <%= image_tag(product.images.first.url) %>
           <% end %>
           <h2><%= product.title %></h2>
           <p>

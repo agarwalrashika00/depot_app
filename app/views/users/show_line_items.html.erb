@@ -1,5 +1,5 @@
-<% @user.line_items.each_with_index do |line_item, index| %>
-  <h3>Line Item#<%= index + 1 %></h3>
+<% @line_items.each_with_index do |line_item, index| %>
+  <h3>Line Item#<%= ( @page_number * 5) + index + 1 %></h3>
   <br>
   product: <%= line_item.product.title %>
   <br>
@@ -9,3 +9,7 @@
   <br>
   <br>
 <% end %>
+<% if @page_number > 0 %>
+  <%= link_to "Previous line items", "line_items?page_number=#{@page_number - 1}", method: :get %>
+<% end %>
+<%= link_to "Next line items", "line_items?page_number=#{@page_number + 1}", method: :get %>
