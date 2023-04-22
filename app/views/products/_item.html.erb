@@ -1,0 +1,26 @@
+<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+  <% if item.images.present? %>
+    <td class="image">
+      <%= image_tag(item.images.first.url, class: 'list_image') if item.images.first %>
+    </td>
+  <% end %>
+  <td class="description">
+    <h1><%= item.title %></h1>
+    <p>
+      <%= truncate(strip_tags(item.description),
+                        length: 80) %>
+    </p>
+  </td>
+  <td class="actions">
+    <ul>
+      <li><%= link_to 'Show', item %></li>
+      <li><%= link_to 'Edit', edit_product_path(item) %></li>
+      <li>
+        <%= link_to 'Destroy',
+                          item,
+                          method: :delete,
+                          data: {turbo_confirm: 'Are you sure?'} %>
+      </li>
+    </ul>
+  </td>
+</tr>

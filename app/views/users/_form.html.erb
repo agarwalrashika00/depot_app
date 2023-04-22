@@ -19,6 +19,21 @@
       <%= form.label :email, 'Email:' %>
       <%= form.text_field :email %>
     </div>
+    Addresses:
+    <ul>
+      <%= form.fields_for :address do |addresses_form| %>
+        <li>
+          <%= addresses_form.label :state %>
+          <%= addresses_form.text_field :state %>
+          <%= addresses_form.label :city %>
+          <%= addresses_form.text_field :city %>
+          <%= addresses_form.label :country %>
+          <%= addresses_form.text_field :country %>
+          <%= addresses_form.label :pincode %>
+          <%= addresses_form.number_field :pincode, in: 100000..999999 %>
+        </li>
+      <% end %>
+    </ul>
     <div class="field">
       <%= form.label :password, 'Password:' %>
       <%= form.password_field :password, size: 40 %>

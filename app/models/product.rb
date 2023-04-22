@@ -1,9 +1,12 @@
 class Product < ApplicationRecord
   attr_accessor :essay, :information
+  attr_accessor :image_params
   has_many :line_items, dependent: :restrict_with_error
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
   belongs_to :category, counter_cache: true
+  has_many :images, as: :imageable, dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
   # before_destroy :ensure_not_referenced_by_any_line_item
 
   validates :title, :description, :image_url, presence: true
@@ -35,6 +38,17 @@ class Product < ApplicationRecord
 
   after_destroy_commit :set_count_on_destroy
 
+  before_save :upload_images
+
+  def upload_images
+    (1...(image_params.length)).each do |i|
+      images.build(url: image_params[i].original_filename)
+      File.open(Rails.root.join('app', 'assets', 'images', image_params[i].original_filename), 'wb') do |f|
+        f.write(image_params[i].read)
+      end
+    end
+  end
+
   private
   # def ensure_not_referenced_by_any_line_item
   #   unless line_items.empty?
@@ -56,13 +70,13 @@ class Product < ApplicationRecord
   end
 
   def set_count_on_save
-    unless category_id_before_last_save.nil?
-      Category.find(category_id_before_last_save).super_category.decrement!(:products_count)
+    if category_id_before_last_save
+      Category.find(category_id_before_last_save).super_category&.decrement!(:products_count)
     end
-    category.super_category.increment!(:products_count)
+    category.super_category&.increment!(:products_count)
   end
 
   def set_count_on_destroy
-    category.super_category.decrement!(:products_count)
+    category.super_category&.decrement!(:products_count)
   end
 end
