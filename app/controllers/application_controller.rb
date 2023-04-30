@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   before_action :authorize
   before_action :set_i18n_locale_from_params
+  before_action :set_execution_time
+  attr_accessor :execution_time
+  before_action :update_last_active
 
   protected
   def authorize
@@ -19,5 +22,18 @@ class ApplicationController < ActionController::Base
         logger.error flash.now[:notice]
       end
     end
-  end  
+  end
+
+  def set_execution_time
+    @execution_time = Time.now
+  end
+
+  def update_last_active
+    if (Time.now - session[:last_active].to_time) > 5.minutes
+      reset_session
+      redirect_to login_url, notice: 'You were inactive for a long time. Please log in again to activate your session.'
+    else
+      session[:last_active] = Time.now
+    end
+  end
 end

@@ -17,6 +17,10 @@ class User < ApplicationRecord
 
   before_update :donot_update_admin, if: :admin?
 
+  def admin?
+    role == 'admin'
+  end
+
   private
   def ensure_an_admin_remains
     if User.count.zero?
@@ -26,10 +30,6 @@ class User < ApplicationRecord
 
   def send_welcome_mail
     WelcomeUserMailer.with(user: self).welcome_user_email.deliver_now
-  end
-
-  def admin?
-    email == ADMIN_EMAIL
   end
 
   def donot_destroy_admin(user)
