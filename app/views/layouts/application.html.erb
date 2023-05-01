@@ -29,11 +29,6 @@
           <li><a href="/questions"><%= t('.questions') %></a></li>
           <li><a href="/news"><%= t('.news') %></a></li>
           <li><a href="/contact"><%= t('.contact') %></a></li>
-          <%
-=begin%>
-          <li class="time"><%= Time.now %></li>
-          <%
-=end%>
         </ul>
         <% if session[:user_id] %>
           <nav class="logged_in_nav">
@@ -56,5 +51,6 @@
         <br>
         "Your IP address is: <%= request.remote_ip %>"
       </main>
-    </body>
-  </html>
+    </section>
+  </body>
+</html>

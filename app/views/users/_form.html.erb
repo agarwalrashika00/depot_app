@@ -2,21 +2,26 @@
   <%= form_with(model: user, local: true) do |form| %>
     <% if user.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <h2>
+          <%= raw t('errors.template.header', count: user.errors.count, model: t('activerecord.models.user')) %>
+        </h2>
+        <p>
+          <%= t('errors.template.body') %>
+        </p>
         <ul>
-          <% user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
+          <% user.errors.full_messages.each do |message| %>
+            <li><%= raw message %></li>
           <% end %>
         </ul>
       </div>
     <% end %>
     <h2>Enter User Details</h2>
     <div class="field">
-      <%= form.label :name, 'Name:' %>
+      <%= form.label :name %>
       <%= form.text_field :name, size: 40 %>
     </div>
     <div class="field">
-      <%= form.label :email, 'Email:' %>
+      <%= form.label :email %>
       <%= form.text_field :email %>
     </div>
     Addresses:
@@ -35,11 +40,11 @@
       <% end %>
     </ul>
     <div class="field">
-      <%= form.label :password, 'Password:' %>
+      <%= form.label :password %>
       <%= form.password_field :password, size: 40 %>
     </div>
     <div class="field">
-      <%= form.label :password_confirmation, 'Confirm' %>
+      <%= form.label :password_confirmation %>
       <%= form.password_field :password_confirmation, id: :user_password_confirmation, size: 40 %>
     </div>
     <div class="actions">

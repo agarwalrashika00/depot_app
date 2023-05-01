@@ -32,11 +32,11 @@
 en:
   layouts:
     application:
-    title: "The Pragmatic Bookshelf"
-    home: "Home"
-    questions: "Questions"
-    news: "News"
-    contact: "Contact"
+      title: "The Pragmatic Bookshelf"
+      home: "Home"
+      questions: "Questions"
+      news: "News"
+      contact: "Contact"
 
   store:
     index:
@@ -85,6 +85,7 @@ en:
     models:
       order: order
       product: product
+      user: user
     attributes:
       order:
         address: "address"
@@ -107,3 +108,18 @@ en:
         other: "%{count} errors have prevented this %{model} from being saved"
 
   thanks: "thanks"
+
+  order_mailer:
+    received:
+      subject: 'Your Pragmatic Store Order Confirmation'
+      order_received: 'Received your order'
+    
+    send_orders_summary:
+      subject: 'Orders summary'
+      orders_summary: 'Here is a summary of all your orders till date.'
+  
+  order: 'Order'
+  
+  sessions:
+    new:
+      already_logged: "You are already logged in"

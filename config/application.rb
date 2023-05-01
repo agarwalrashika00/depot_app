@@ -13,6 +13,9 @@ module Depot
 
     config.autoload_paths += Dir[File.join(Rails.root, 'app', 'models', 'validators')]
 
+    config.autoload_paths += Dir[File.join(Rails.root, 'lib')]
+
+    config.action_mailer.default_url_options = { :host => "http://localhost:3000" }
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

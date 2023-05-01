@@ -1,0 +1,10 @@
+Hi <%= @user.name %>
+<%= t('.orders_summary') %>
+<% @orders.each_with_index do |order, index| %>
+  <%= t(:order) %>#<%= index + 1 %>
+  <% order.line_items.each do |line_item| %>
+    Product: <%= line_item.product.title %>
+    Quantity: <%= line_item.quantity %>
+  <% end %>
+  Order Pay Type: <%= order.pay_type %>
+<% end %>
