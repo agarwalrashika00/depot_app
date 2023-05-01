@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update_last_active
-    if (Time.now - session[:last_active].to_time) > 5.minutes
+    if session[:last_active] && ((Time.now - session[:last_active].to_time) > 5.minutes)
       reset_session
       redirect_to login_url, notice: 'You were inactive for a long time. Please log in again to activate your session.'
     else

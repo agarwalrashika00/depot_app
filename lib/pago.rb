@@ -22,7 +22,6 @@ class Pago
       sleep 3 unless Rails.env.test?
       Rails.logger.info "Done Processing Payment"
       OpenStruct.new(succeeded?: true)
-    end
   end
 end
       

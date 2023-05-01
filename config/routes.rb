@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  constraints(lambda { |request| request.env['HTTP_USER_AGENT'] !~ /[^\(]*[^\)]*[^\t]Firefox\// }) do
+  constraints(-> (request) { request.env['HTTP_USER_AGENT'] !~ /Firefox\// }) do
   get 'admin' => 'admin#index'
   controller :sessions do
     get 'login' => :new
