@@ -13,10 +13,11 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.build_address
   end
 
   # GET /users/1/edit
-  def edit
+  def edit 
   end
 
   # POST /users or /users.json
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(user_params) && @user.addresses.first.update(user_params[:addresses_attributes]['0'])
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -66,10 +67,15 @@ class UsersController < ApplicationController
 
   def show_orders
     @user = User.includes(orders: { line_items: :product }).find(session[:user_id])
+    render layout: "myorders"
   end
 
   def show_line_items
-    @user = User.includes(line_items: :product).find(session[:user_id])
+    params[:page_number] ||= 0
+    user = User.includes(line_items: :product).find(session[:user_id])
+    @line_items = user.line_items.limit(5).offset(params[:page_number].to_i * 5)
+    @page_number = params[:page_number].to_i
+    render layout: "myorders"
   end
 
   private
@@ -80,6 +86,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, address_attributes: [:id, :state, :city, :country, :pincode])
     end
 end

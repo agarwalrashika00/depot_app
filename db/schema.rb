@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_12_072306) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_120030) do
   create_table "action_mailbox_inbound_emails", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "status", default: 0, null: false
     t.string "message_id", null: false
@@ -58,6 +58,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_072306) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "state"
+    t.string "city"
+    t.string "country"
+    t.integer "pincode"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
   create_table "carts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -71,6 +82,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_072306) do
     t.datetime "updated_at", null: false
     t.integer "products_count", default: 0, null: false
     t.index ["super_category_id"], name: "fk_rails_0bf8bd72e7"
+  end
+
+  create_table "images", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "url"
+    t.binary "image"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"
   end
 
   create_table "line_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -131,6 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_072306) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "users"
   add_foreign_key "categories", "categories", column: "super_category_id"
   add_foreign_key "line_items", "carts"
   add_foreign_key "line_items", "orders"

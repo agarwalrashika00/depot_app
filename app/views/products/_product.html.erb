@@ -1,22 +1,24 @@
 <div id="<%= dom_id product %>">
+  <div class="slider">
+    <%= image_tag(product.images.first.url, class: 'slider-img') if product.images.first %>
+    <%= image_tag(product.images.second.url, class: 'slider-img') if product.images.second %>
+    <%= image_tag(product.images.third.url, class: 'slider-img') if product.images.third %>
+  </div>
+  <div class="navigation-button">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
   <p>
     <strong>Title:</strong>
     <%= product.title %>
   </p>
-
   <p>
     <strong>Description:</strong>
     <%= product.description %>
   </p>
-
-  <p>
-    <strong>Image url:</strong>
-    <%= product.image_url %>
-  </p>
-
   <p>
     <strong>Price:</strong>
     <%= sprintf("$%0.02f", product.price) %>
   </p>
-
 </div>
