@@ -9,6 +9,6 @@ class StoreController < ApplicationController
     else
       session[:counter] += 1
     end
-    @products = Product.order(:title)
+    @products = Product.includes(:images).order(:title)
   end
 end

@@ -78,3 +78,5 @@ es:
         other: "%{count} errores han impedido que este %{model} se guarde"
 
   thanks: "Thank You"
+
+  already_logged: "You are logged in already"

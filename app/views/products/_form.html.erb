@@ -1,13 +1,13 @@
 <%= form_with model: product, multipart: true do |form| %>
   <% if product.errors.any? %>
     <div id="error_explanation">
-      <h2><%=raw t('errors.template.header', count: @product.errors.count, 
+      <h2><%= raw t('errors.template.header', count: @product.errors.count, 
         model: t('activerecord.models.product')) %>.
       </h2>
       <p><%= t('errors.template.body') %></p>
       <ul>
         <% product.errors.full_messages.each do |message| %>
-          <li><%=raw message %></li>
+          <li><%= raw message %></li>
         <% end %>
       </ul>
     </div>
