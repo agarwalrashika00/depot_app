@@ -48,6 +48,13 @@
       </nav>
       <main class='<%= controller.controller_name %>'>
         <%= yield %>
+        <br>
+        Execution Time = <%= (Time.now - controller.execution_time) * 1000 %> ms
+        <br>
+        <% session["#{params[:controller]} #{params[:action]}"] = 0 unless session["#{params[:controller]} #{params[:action]}"] %>
+        Hit counter: <%= session["#{params[:controller]} #{params[:action]}"] += 1 %>
+        <br>
+        "Your IP address is: <%= request.remote_ip %>"
       </main>
     </body>
   </html>

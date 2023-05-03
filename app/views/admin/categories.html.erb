@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>Category Name</th>
+    <th>Parent Category Name</th>
+    <th>No of products</th>
+  </tr>
+  <% @categories.each do |category| %>
+    <tr>
+      <td><%= link_to category.name, products_category_path(category) %></td>
+      <td><%= category.super_category&.name %></td>
+      <td><%= category.products_count %></td>
+    </tr>
+  <% end %>
+</table>
